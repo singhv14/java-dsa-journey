@@ -1,0 +1,52 @@
+package Day8;
+
+import java.util.HashMap;
+
+public class SubArraySumEqualsK {
+    public static void main(String[] args) {
+
+        int[] nums={1,1,1};
+        int k=2;
+
+        int result=bruteForceSubArraySum(nums,k);
+        System.out.println(result);
+
+        optimalSolutionForSubArraySum(nums,k);
+
+
+    }
+
+    private static void optimalSolutionForSubArraySum(int[] nums, int k) {
+
+        HashMap<Integer, Integer> map=new HashMap<>();
+
+        map.put(0,1);
+        int currentSum=0;
+        int count=0;
+
+        for(int i=0;i<nums.length;i++){
+
+            currentSum+=nums[i];
+
+            if(map.containsKey(currentSum-k)){
+                count+=map.get(currentSum-k);
+            }
+
+            map.put(currentSum, map.getOrDefault(currentSum,0)+1);
+
+        }
+        System.out.println(count);
+    }
+
+    public static int bruteForceSubArraySum(int[] nums, int k) {
+        int count=0;
+        for (int i = 0; i < nums.length; i++) {
+            int sum = 0;
+            for (int j = i; j < nums.length; j++) {
+                sum+=nums[j];
+                if (sum == k) count++;
+            }
+        }
+        return count;
+    }
+}
